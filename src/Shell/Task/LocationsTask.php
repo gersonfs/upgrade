@@ -13,6 +13,8 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Upgrade\Shell\Task;
+use Cake\Filesystem\File;
+use Cake\Filesystem\Folder;
 
 /**
  * Move files around as directories have changed in 3.0
@@ -57,7 +59,11 @@ class LocationsTask extends BaseTask {
 			return false;
 		}
 
-		return $this->Stage->move($path, $new);
+		$moved = $this->Stage->move($path, $new);
+
+		//$folder = new Folder();
+
+		return $moved;
 	}
 
 	/**
@@ -98,22 +104,22 @@ class LocationsTask extends BaseTask {
 			'Console' . DS . 'Command' . DS . 'Task' => 'Shell' . DS . 'Task',
 			'Console' . DS . 'Command' => 'Shell',
 			'Console' => 'bin',
-			'Controller' . DS . 'Component' . DS . 'Auth' => 'Auth',
-			'Lib' => 'src',
-			'Test' . DS . 'Case' => 'tests' . DS . 'TestCase',
-			'View' . DS . 'Elements' => 'Template' . DS . 'Element',
+			//'Controller' . DS . 'Component' . DS . 'Auth' => 'Auth',
+			'Lib' => 'src/Lib',
+			'Test' . DS . 'Case' => 'tests/TestCase',
+			'View' . DS . 'Elements' => 'templates/element',
 			'View' . DS . 'Emails' => 'Template' . DS . 'Email',
 			'View' . DS . 'Layouts' => 'Template' . DS . 'Layout',
 			'Template' . DS . 'Layout' . DS . 'Emails' => 'Template' . DS . 'Layout' . DS . 'Email',
-			'View' . DS . 'Scaffolds' => 'Template' . DS . 'Scaffold',
-			'View' . DS . 'Errors' => 'Template' . DS . 'Error',
-			'View' . DS . 'Themed' => 'Template' . DS . 'Themed',
-			'Auth' => 'Auth',
-			'Controller' => 'Controller',
-			'Model' => 'Model',
-			'Template' => 'Template',
-			'View' . DS . 'Helper' => 'View' . DS . 'Helper',
-			'View' => 'Template',
+			//'View' . DS . 'Scaffolds' => 'Template' . DS . 'Scaffold',
+			'View' . DS . 'Errors' => 'templates/Error',
+			//'View' . DS . 'Themed' => 'Template' . DS . 'Themed',
+			//'Auth' => 'Auth',
+			'Controller' => 'src/Controller',
+			'Model' => 'src/Model',
+			//'Template' => 'Template',
+			'View' . DS . 'Helper' => 'src/View/Helper',
+			'View' => 'templates',
 			'Test' => 'tests',
 		];
 	}
@@ -153,6 +159,7 @@ class LocationsTask extends BaseTask {
 			'bin',
 			'tests',
 			'src',
+			'templates'
 		];
 		$pieces = explode(DS, $folder);
 		$firstFolder = !empty($pieces[0]) ? $pieces[0] : $folder;
